@@ -42,7 +42,7 @@ public class S3DataModelProcessor implements RequestHandler<Map<String, Object>,
         int total = dynamoService.getOrStoreCount(input.getTable(), pk,
                 () -> s3Service.countObjects(input.getBucket(), input.getPrefix()));
 
-        List<String> toProcess = s3Service.fetchNextChunk(
+        List<String> toProcess = s3Service.fetchNextBatch(
                 input.getBucket(), input.getPrefix(), chunkSize,
                 dynamoService.countReports(input.getTable(), pk),
                 fullPath -> dynamoService.storeReport(input.getTable(), pk, fullPath)
